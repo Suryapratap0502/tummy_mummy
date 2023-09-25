@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductModel;
+use App\Models\VendorCategoryModel;
+use App\Models\VendorInCatModel;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -20,6 +22,13 @@ class ProductController extends Controller
 
     public function add_form()
     {
-        return view('product/add_form');
+        if(getuserdetail('id') == 1)
+        {
+            $data['category'] = VendorInCatModel::with('category_vendor')->where('flag', '!=', '2')->get();
+        }else{
+            $data['category'] = VendorInCatModel::with('category_vendor')->where('flag', '!=', '2')->where('vendor_id',get_admin_id())->get();
+        }
+        
+        return view('product/add_form',$data);
     }
 }

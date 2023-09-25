@@ -94,17 +94,18 @@
 
                         <div class="tab-content">
                             <div class="tab-pane show active" id="steparrow-gen-info" role="tabpanel" aria-labelledby="steparrow-gen-info-tab">
+                                <form id="add_product" method="post">
                                 <div>
                                     <div class="row">
                                         <div class="col-lg-3">
                                             <div class="mb-3">
                                             <label class="form-label d-flex justify-content-between align-items-center" for="category"><div>Category<span class="error_lable">*</span></div><button type="button" class="btn btn-soft-primary btn-sm shadow-none flex-shrink-0" data-bs-toggle="modal"
                                                 data-bs-target="#request_category"><i class="ri-add-fill me-1 align-bottom"></i>Request New</button></label>
-                                            <select class="form-control js-example-basic-multiple" multiple="multiple" name="category[]" id="category"  >
-                                                <option></option>
+                                            <select class="form-control" name="category" id="category"  >
+                                                <option value="" selected>Select Category</option>
                                                 @if(!empty($category))
                                                 @foreach($category as $cat_val)
-                                                <option value="{{$cat_val->id}}">{{$cat_val->name}}</option>
+                                                <option value="{{$cat_val->category_vendor->id}}">{{$cat_val->category_vendor->name}}</option>
                                                 @endforeach
                                                 @endif
                                             </select>
@@ -202,23 +203,29 @@
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-start gap-3 mt-4">
-                                    <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="steparrow-description-info-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Next</button>
+                                    <input type="submit" class="btn btn-success btn-label right ms-auto" data-nexttab="steparrow-description-info-tab" value="Save & Next">
                                 </div>
+                                </form>
                             </div>
                             <!-- end tab pane -->
 
                             <div class="tab-pane fade" id="steparrow-description-info" role="tabpanel" aria-labelledby="steparrow-description-info-tab">
                                 <div id="addnew">
                                     <div class="row">
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label class="form-label" for="variant_name">Variant Name<span class="error_lable">*</span></label>
-                                                <input type="text" class="form-control" id="variant_name" name="variant_name" placeholder="Enter Variant Name" required="">
+                                                {{-- <input type="text" class="form-control" id="variant_name" name="variant_name" placeholder="Enter Variant Name" required=""> --}}
+                                                <select class="form-control js-example-basic-multiple" multiple="multiple" id="variant_name" name="variant_name[]">
+                                                    <option value="250 gm">250 gm</option>
+                                                    <option value="500 gm">500 gm</option>
+                                                    <option value="1000 gm">1000 gm</option>
+                                                </select>
                                                 <span id="variant_name_error" class="error"></span>
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label class="form-label" for="qty">Quantity<span class="error_lable">*</span></label>
                                                 <input type="text" class="form-control" id="qty" name="qty" placeholder="Enter Quantity" required="">
@@ -226,41 +233,16 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-3">
-                                            <div class="mb-3">
-                                                <label class="form-label" for="exp_price">Expected Price<span class="error_lable">*</span></label>
-                                                <input type="text" class="form-control" id="exp_price" name="exp_price" placeholder="Enter Expected Price" required="">
-                                                <span id="exp_price_error" class="error"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="mb-3">
-                                                <label class="form-label" for="final_price">Final Price<span class="error_lable">*</span></label>
-                                                <input type="text" class="form-control" id="final_price" name="final_price" placeholder="Enter Final Price" required="">
-                                                <span id="final_price_error" class="error"></span>
-                                                <span class="error" style="font-size: 10px;"><i>T&M & Merchant Mutually Agreed</i></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label class="form-label" for="sku_code">SKU Code<span class="error_lable">*</span></label>
                                                 <input type="text" class="form-control" id="sku_code" name="sku_code" placeholder="Enter SKU Code" required="">
                                                 <span id="sku_code_error" class="error"></span>
                                             </div>
                                         </div>
-                                        <div class="col-lg-3">
-                                            <div class="mb-3">
-                                                <label class="form-label" for="variant_specification">Specification<span class="error_lable">*</span></label>
-                                                <textarea type="text" class="form-control" id="variant_specification" name="variant_specification" placeholder="Enter Specification" required=""></textarea>
-                                                <span id="variant_specification_error" class="error"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label class="form-label" for="ingradiants">Ingradiants<span class="error_lable">*</span></label>
-                                                <textarea type="text" class="form-control" id="ingradiants" name="ingradiants" placeholder="Enter Ingradiants" required=""></textarea>
-                                                <span id="ingradiants_error" class="error"></span>
+                                        <div class="alert alert-info border-0 rounded-0 m-0 d-flex align-items-center mb-2" role="alert">
+                                            <div class="flex-grow-1 text-truncate">
+                                                Variant Detail of <b>200 gm</b>
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -286,21 +268,45 @@
                                                 <span id="variant_height_error" class="error"></span>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-3">
                                             <div class="mb-3">
                                                 <label class="form-label" for="variant_weight">Weight (In gm)<span class="error_lable">*</span></label>
                                                 <input type="text" class="form-control" id="variant_weight" name="variant_weight" placeholder="Enter Specification" required="">
                                                 <span id="variant_weight_error" class="error"></span>
                                             </div>
                                         </div>
-                                        <input type="hidden" class="rowcount" value="" name="rowcount">
-                                        <div class="col-lg-1 text-end">
 
-                                            <button type="button" onclick="add_row();" class="btn btn-primary wave-effect wave-light shadow-none"
-                                                style="margin-top:28px;">
-                                                Add
-                                            </button>
-
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="exp_price">Expected Price<span class="error_lable">*</span></label>
+                                                <input type="text" class="form-control" id="exp_price" name="exp_price" placeholder="Enter Expected Price" required="">
+                                                <span id="exp_price_error" class="error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="final_price">Final Price<span class="error_lable">*</span></label>
+                                                <input type="text" class="form-control" id="final_price" name="final_price" placeholder="Enter Final Price" required="">
+                                                <span id="final_price_error" class="error"></span>
+                                                <span class="error" style="font-size: 10px;"><i>T&M & Merchant Mutually Agreed</i></span>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="variant_specification">Specification<span class="error_lable">*</span></label>
+                                                <textarea type="text" class="form-control" id="variant_specification" name="variant_specification" placeholder="Enter Specification" required=""></textarea>
+                                                <span id="variant_specification_error" class="error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="ingradiants">Ingradiants<span class="error_lable">*</span></label>
+                                                <textarea type="text" class="form-control" id="ingradiants" name="ingradiants" placeholder="Enter Ingradiants" required=""></textarea>
+                                                <span id="ingradiants_error" class="error"></span>
+                                            </div>
                                         </div>
                                     </div>
                                     
@@ -441,7 +447,8 @@
 <script>
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2({
-        placeholder: "Select an option",
+        placeholder: "Select Variants",
+        tags:true,
     });
 });
 </script>
@@ -451,22 +458,3 @@
     
 </script>
 
-<script>
-     var rowcount = 1;
-     $(".rowcount").val(rowcount);
-
-   function add_row() {
-    rowcount++;
-    $(".rowcount").val(rowcount);
-    var html = '<div class="row borderset" id="addnew' + rowcount + '" >';
-        html += '<div class="col-lg-6"><div class="mb-3"><label class="form-label" for="meta_title">Meta Title<span class="error_lable">*</span></label><input type="text" class="form-control" id="meta_title" name="meta_title" placeholder="Enter Meta Title" required=""><span id="meta_title_error" class="error"></span></div></div>';
-        html += '<div class="col-lg-6"><div class="mb-3"><label class="form-label" for="meta_tag">Meta Tags<span class="error_lable">*</span></label><input type="text" class="form-control" value="tag1, tag2, tag3" id="tag-input" name="meta_tag" placeholder="Enter Meta Tags" required=""><span id="meta_tag_error" class="error"></span></div></div>';
-        html += '<div class="col-lg-12"><div class="mb-3"><label class="form-label" for="meta_keys">Meta Keywords<span class="error_lable">*</span></label><input type="text" class="form-control meta_keys" id="meta_keys" name="meta_keys" placeholder="Enter Meta Keyword" required=""><span id="meta_keys_error" class="error"></span></div></div>';
-        html += '<div class="col-lg-2"> <button type="button" onclick="removerow(' + rowcount +');" class="btn btn-primary wave-effect wave-light shadow-none" style="margin-top:28px;">Less</button></div></div></div>';
-        $('#addnew' + rowcount ).append(html);
-   }
-
-   function removerow(product) {
-       $('#addnew' + product).remove();
-   }
-</script>

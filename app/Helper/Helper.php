@@ -4,12 +4,22 @@ use App\Models\InnerSidebarModel;
 use App\Models\RoleModel;
 use App\Models\SidebarModel;
 use App\Models\UserAccessModel;
+use App\Models\VendorModel;
 
 if (!function_exists('getuserdetail')) {
     function getuserdetail($string)
     {
         $sess = session('admin_login');
         return $sess[$string] ?? '';
+    }
+}
+
+if (!function_exists('get_admin_id')) {
+    function get_admin_id()
+    {
+        $sess = session('admin_login');
+        $sess_admin_id = VendorModel::where('admin_id',$sess['id'])->first();
+        return $sess_admin_id->id ?? '';
     }
 }
 

@@ -1,6 +1,6 @@
 var base_url = window.location.origin + "/";
 
-$(document).on('submit', '#add_vendor', function (ev) {
+$(document).on('submit', '#add_product', function (ev) {
     $('.error').html('');
     ev.preventDefault(); // Prevent browers default submit.
     var formData = new FormData(this);
